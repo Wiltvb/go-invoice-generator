@@ -4,7 +4,7 @@ import (
 	"io/ioutil"
 	"os"
 
-	generator "github.com/angelodlfrtr/go-invoice-generator"
+	generator "github.com/Wiltvb/go-invoice-generator"
 	"github.com/go-pdf/fpdf"
 )
 

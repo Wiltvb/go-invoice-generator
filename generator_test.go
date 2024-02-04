@@ -57,8 +57,9 @@ func TestInvoice(t *testing.T) {
 	logoPN, _ := os.ReadFile("./paynow.png")
 
 	doc.SetPayNow(&PayNow{
-		UEN:   "201541478E",
-		Image: logoPN,
+		UEN:    "201541478E",
+		Image:  logoPN,
+		Height: 40,
 	})
 
 	doc.SetCompany(&Contact{

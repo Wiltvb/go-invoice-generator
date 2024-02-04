@@ -8,8 +8,10 @@ import (
 )
 
 type PayNow struct {
-	UEN   string `json:"uen,omitempty"`
-	Image []byte `json:"logo,omitempty"` // Logo byte array
+	UEN    string `json:"uen,omitempty"`
+	Image  []byte `json:"logo,omitempty"` // Logo byte array
+	Width  int    `json:"width"`
+	Height int    `json:"height"`
 }
 
 func (p *PayNow) appendPayNowTODoc(x float64,
@@ -35,9 +37,9 @@ func (p *PayNow) appendPayNowTODoc(x float64,
 			var imageOpt fpdf.ImageOptions
 			imageOpt.ImageType = format
 
-			currentY := doc.pdf.GetY() + 30
+			currentY := doc.pdf.GetY() + float64(p.Height) - 10
 
-			doc.pdf.ImageOptions(fileName, doc.pdf.GetX(), currentY, 0, 30, false, imageOpt, 0, "")
+			doc.pdf.ImageOptions(fileName, doc.pdf.GetX(), currentY, 0, float64(p.Height), false, imageOpt, 0, "")
 
 		}
 	}

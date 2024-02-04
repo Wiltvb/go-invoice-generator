@@ -72,6 +72,11 @@ func (d *Document) SetPaymentTerm(term string) *Document {
 	return d
 }
 
+func (d *Document) SetPayNow(paynow *PayNow) *Document {
+	d.PayNow = paynow
+	return d
+}
+
 // SetDefaultTax of document
 func (d *Document) SetDefaultTax(tax *Tax) *Document {
 	d.DefaultTax = tax

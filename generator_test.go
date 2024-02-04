@@ -53,6 +53,8 @@ func TestNew(t *testing.T) {
 
 	logoBytes, _ := os.ReadFile("./example_logo.png")
 
+	logopn, _ := os.ReadFile("./paynow.png")
+
 	doc.SetCompany(&Contact{
 		Name: "Test Company",
 		Logo: logoBytes,
@@ -64,6 +66,11 @@ func TestNew(t *testing.T) {
 			Country:    "France",
 		},
 		AddtionnalInfo: []string{"Cupcake: ipsum dolor"},
+	})
+
+	doc.SetPayNow(&PayNow{
+		UEN:   "abcabcbacbbc",
+		Image: logopn,
 	})
 
 	doc.SetCustomer(&Contact{

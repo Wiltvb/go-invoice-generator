@@ -27,6 +27,7 @@ type Document struct {
 	PaymentTerm  string        `json:"payment_term,omitempty"`
 	DefaultTax   *Tax          `json:"default_tax,omitempty"`
 	Discount     *Discount     `json:"discount,omitempty"`
+	PayNow       *PayNow       `json:"pay_now,omitempty"`
 }
 
 // Pdf returns the underlying *fpdf.Fpdf used to build document

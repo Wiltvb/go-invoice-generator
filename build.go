@@ -81,6 +81,9 @@ func (doc *Document) Build() (*fpdf.Fpdf, error) {
 	// Append notes
 	doc.appendNotes()
 
+	// Append Paynow to doc
+	doc.PayNow.appendPaynowToDoc(doc)
+
 	// Append total
 	doc.appendTotal()
 

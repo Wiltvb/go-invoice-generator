@@ -2,6 +2,8 @@ package generator
 
 import (
 	"errors"
+	"fmt"
+	"log"
 	"os"
 	"testing"
 )
@@ -14,6 +16,104 @@ func TestNewWithInvalidType(t *testing.T) {
 	}
 
 	t.Fatalf("expected ErrInvalidDocumentType, got %v", err)
+}
+
+func TestInvoice(t *testing.T) {
+	doc, _ := New(Invoice, &Options{
+		TextTypeInvoice:        "INVOICE",
+		AutoPrint:              true,
+		CurrencySymbol:         "$",
+		CurrencyPrecision:      2,
+		CurrencyThousand:       ",",
+		TextItemsNameTitle:     "Service",
+		TextItemsUnitCostTitle: "Standard Fee",
+		TextTotalTotal:         "Total",
+		TextTotalTax:           "-",
+		TextTotalWithTax:       "-",
+		TextItemsTotalHTTitle:  "-",
+	})
+
+	doc.SetHeader(&HeaderFooter{
+		Text:       fmt.Sprintf("<center>Invoice as of %s</center>", "abacas"),
+		Pagination: true,
+	})
+
+	doc.SetFooter(&HeaderFooter{
+		Text:       fmt.Sprintf("<center>Invoice as of %s</center>", "abacas"),
+		Pagination: true,
+	})
+
+	doc.SetRef("adsadasdadasdsd")
+
+	doc.SetDescription("Fees")
+
+	doc.SetDate("02-02-2006")
+
+	logoBytes, err := os.ReadFile("./logo.png")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	logoPN, _ := os.ReadFile("./paynow.png")
+
+	doc.SetPayNow(&PayNow{
+		UEN:   "201541478E",
+		Image: logoPN,
+	})
+
+	doc.SetCompany(&Contact{
+		Name: "Test Company",
+		Logo: logoBytes,
+		Address: &Address{
+			Address:    "89 Rue de Brest",
+			Address2:   "Appartement 2",
+			PostalCode: "75000",
+			City:       "Paris",
+			Country:    "France",
+		},
+		AddtionnalInfo: []string{"Cupcake: ipsum dolor"},
+	})
+
+	doc.SetCustomer(&Contact{
+		Name: "Test Customer",
+		Address: &Address{
+			Address:    "89 Rue de Paris",
+			PostalCode: "29200",
+			City:       "Brest",
+			Country:    "France",
+		},
+		AddtionnalInfo: []string{
+			"Cupcake: ipsum dolor",
+			"Cupcake: ipsum dolo r",
+		},
+	})
+	var total = 0.0
+
+	// Step - Append Items
+	for i := 0; i < 5; i++ {
+		doc.AppendItem(&Item{
+			Name:        "Cupcake ipsum dolor sit amet bonbon, coucou bonbon lala jojo, mama titi toto",
+			Description: "Cupcake ipsum dolor sit amet bonbon, Cupcake ipsum dolor sit amet bonbon, Cupcake ipsum dolor sit amet bonbon",
+			UnitCost:    "99876.89",
+			Quantity:    "2",
+			Tax: &Tax{
+				Percent: "20",
+			},
+		})
+	}
+
+	doc.SetNotes(fmt.Sprintf("Corporate PayNow UEN: 201541478E<br>Amount: %.2f<br>Indicate Payment Reference <strong>%s</strong>", total, "asdasdasdsa"))
+
+	pdf, err := doc.Build()
+	if err != nil {
+		t.Errorf(err.Error())
+	}
+
+	err = pdf.OutputFileAndClose("out.pdf")
+
+	if err != nil {
+		t.Errorf(err.Error())
+	}
 }
 
 func TestNew(t *testing.T) {

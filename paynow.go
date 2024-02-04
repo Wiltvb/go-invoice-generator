@@ -15,7 +15,6 @@ type PayNow struct {
 func (p *PayNow) appendPayNowTODoc(x float64,
 	y float64,
 	doc *Document) float64 {
-	doc.pdf.SetXY(x, y)
 	// Logo
 	if p.Image != nil {
 		// Create filename
@@ -36,7 +35,7 @@ func (p *PayNow) appendPayNowTODoc(x float64,
 			var imageOpt fpdf.ImageOptions
 			imageOpt.ImageType = format
 
-			currentY := doc.pdf.GetY() + 30*3
+			currentY := doc.pdf.GetY() + 30
 
 			doc.pdf.ImageOptions(fileName, doc.pdf.GetX(), currentY, 0, 30, false, imageOpt, 0, "")
 

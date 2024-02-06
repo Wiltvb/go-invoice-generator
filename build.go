@@ -414,30 +414,32 @@ func (doc *Document) appendTotal() {
 		doc.pdf.SetY(doc.pdf.GetY() + 10)
 	}
 
-	// Draw tax title
-	doc.pdf.SetX(120)
-	doc.pdf.SetFillColor(doc.Options.DarkBgColor[0], doc.Options.DarkBgColor[1], doc.Options.DarkBgColor[2])
-	doc.pdf.Rect(120, doc.pdf.GetY(), 40, 10, "F")
-	doc.pdf.CellFormat(38, 10, doc.encodeString(doc.Options.TextTotalTax), "0", 0, "R", false, 0, "")
+	if doc.DefaultTax != nil {
+		// Draw tax title
+		doc.pdf.SetX(120)
+		doc.pdf.SetFillColor(doc.Options.DarkBgColor[0], doc.Options.DarkBgColor[1], doc.Options.DarkBgColor[2])
+		doc.pdf.Rect(120, doc.pdf.GetY(), 40, 10, "F")
+		doc.pdf.CellFormat(38, 10, doc.encodeString(doc.Options.TextTotalTax), "0", 0, "R", false, 0, "")
 
-	// Draw tax amount
-	doc.pdf.SetX(162)
-	doc.pdf.SetFillColor(doc.Options.GreyBgColor[0], doc.Options.GreyBgColor[1], doc.Options.GreyBgColor[2])
-	doc.pdf.Rect(160, doc.pdf.GetY(), 40, 10, "F")
-	doc.pdf.CellFormat(
-		40,
-		10,
-		doc.encodeString(doc.ac.FormatMoneyDecimal(doc.Tax())),
-		"0",
-		0,
-		"L",
-		false,
-		0,
-		"",
-	)
+		// Draw tax amount
+		doc.pdf.SetX(162)
+		doc.pdf.SetFillColor(doc.Options.GreyBgColor[0], doc.Options.GreyBgColor[1], doc.Options.GreyBgColor[2])
+		doc.pdf.Rect(160, doc.pdf.GetY(), 40, 10, "F")
+		doc.pdf.CellFormat(
+			40,
+			10,
+			doc.encodeString(doc.ac.FormatMoneyDecimal(doc.Tax())),
+			"0",
+			0,
+			"L",
+			false,
+			0,
+			"",
+		)
+		doc.pdf.SetY(doc.pdf.GetY() + 10)
+	}
 
 	// Draw total with tax title
-	doc.pdf.SetY(doc.pdf.GetY() + 10)
 	doc.pdf.SetX(120)
 	doc.pdf.SetFillColor(doc.Options.DarkBgColor[0], doc.Options.DarkBgColor[1], doc.Options.DarkBgColor[2])
 	doc.pdf.Rect(120, doc.pdf.GetY(), 40, 10, "F")

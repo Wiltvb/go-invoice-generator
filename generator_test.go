@@ -159,7 +159,7 @@ func TestInvoice(t *testing.T) {
 	doc.SetPayNow(&PayNow{
 		UEN:    "201541478E",
 		Image:  logoPN,
-		Height: 40,
+		Height: 35,
 	})
 
 	doc.SetCompany(&Contact{
@@ -202,6 +202,8 @@ func TestInvoice(t *testing.T) {
 	}
 
 	doc.SetNotes(fmt.Sprintf("Corporate PayNow UEN: 201541478E<br>Amount: %.2f<br>Indicate Payment Reference <strong>%s</strong>", total, "asdasdasdsa"))
+
+	doc.SetPaymentTermsString("Payment Due: XXXXXXXXXX<br>Payment Method : PayNow (You can scan the QR below to pay via QR)")
 
 	pdf, err := doc.Build()
 	if err != nil {

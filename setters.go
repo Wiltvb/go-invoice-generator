@@ -42,6 +42,10 @@ func (d *Document) SetNotes(notes string) *Document {
 	return d
 }
 
+func (d *Document) SetPaymentTermsString(terms string) {
+	d.TermsString = terms
+}
+
 // SetCompany of document
 func (d *Document) SetCompany(company *Contact) *Document {
 	d.Company = company

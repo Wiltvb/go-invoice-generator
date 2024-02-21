@@ -47,7 +47,7 @@ func (c *Contact) appendContactTODoc(
 		if imageInfo != nil {
 			var imageOpt fpdf.ImageOptions
 			imageOpt.ImageType = format
-			doc.pdf.ImageOptions(fileName, doc.pdf.GetX(), y, 0, 30, false, imageOpt, 0, "")
+			doc.pdf.ImageOptions(fileName, doc.pdf.GetX(), y, 0, 20, false, imageOpt, 0, "")
 			doc.pdf.SetY(y + 30)
 		}
 	}

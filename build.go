@@ -78,14 +78,17 @@ func (doc *Document) Build() (*fpdf.Fpdf, error) {
 		doc.pdf.AddPage()
 	}
 
+	// Append total
+	doc.appendTotal()
+
+	// Append Payment Terms
+	doc.appendPaymentTerms()
+
 	// Append notes
 	doc.appendNotes()
 
 	// Append Paynow to doc
 	doc.PayNow.appendPaynowToDoc(doc)
-
-	// Append total
-	doc.appendTotal()
 
 	// Append payment term
 	doc.appendPaymentTerm()
@@ -107,11 +110,11 @@ func (doc *Document) appendTitle() {
 
 	// Draw rect
 	doc.pdf.SetFillColor(doc.Options.DarkBgColor[0], doc.Options.DarkBgColor[1], doc.Options.DarkBgColor[2])
-	doc.pdf.Rect(120, BaseMarginTop, 80, 10, "F")
+	doc.pdf.Rect(130, BaseMarginTop, 70, 10, "F")
 
 	// Draw text
-	doc.pdf.SetFont(doc.Options.Font, "", 14)
-	doc.pdf.CellFormat(80, 10, doc.encodeString(title), "0", 0, "C", false, 0, "")
+	doc.pdf.SetFont(doc.Options.Font, "", 12)
+	doc.pdf.CellFormat(90, 10, doc.encodeString(title), "0", 0, "C", false, 0, "")
 }
 
 // appendMetas to document
@@ -145,9 +148,13 @@ func (doc *Document) appendMetas() {
 // appendDescription to document
 func (doc *Document) appendDescription() {
 	if len(doc.Description) > 0 {
+		doc.pdf.SetFillColor(240, 248, 255)
+		doc.pdf.Rect(10, doc.pdf.GetY()+10, 190, 5, "F")
+
 		doc.pdf.SetY(doc.pdf.GetY() + 10)
 		doc.pdf.SetFont(doc.Options.Font, "", 10)
 		doc.pdf.MultiCell(190, 5, doc.encodeString(doc.Description), "B", "L", false)
+
 	}
 }
 
@@ -292,6 +299,27 @@ func (doc *Document) appendItems() {
 	}
 }
 
+// appendPayment Terms
+func (doc *Document) appendPaymentTerms() {
+	if len(doc.TermsString) == 0 {
+		return
+	}
+
+	doc.pdf.SetFillColor(240, 248, 255)
+	doc.pdf.Rect(10, doc.pdf.GetY()+5, 190, 5, "F")
+
+	doc.pdf.SetY(doc.pdf.GetY() + 5)
+	doc.pdf.SetFont(doc.Options.Font, "", 10)
+	doc.pdf.MultiCell(190, 5, "Payment Terms", "B", "L", false)
+
+	doc.pdf.SetY(doc.pdf.GetY() + 3)
+	doc.pdf.SetFont(doc.Options.Font, "", 10)
+	html := doc.pdf.HTMLBasicNew()
+
+	_, lineHt := doc.pdf.GetFontSize()
+	html.Write(lineHt, doc.encodeString(doc.TermsString))
+}
+
 // appendNotes to document
 func (doc *Document) appendNotes() {
 	if len(doc.Notes) == 0 {
@@ -315,7 +343,7 @@ func (doc *Document) appendNotes() {
 
 // appendTotal to document
 func (doc *Document) appendTotal() {
-	doc.pdf.SetY(doc.pdf.GetY() + 10)
+	doc.pdf.SetY(doc.pdf.GetY())
 	doc.pdf.SetFont(doc.Options.Font, "", LargeTextFontSize)
 	doc.pdf.SetTextColor(
 		doc.Options.BaseTextColor[0],

@@ -25,6 +25,7 @@ type Document struct {
 	Date         string        `json:"date,omitempty"`
 	ValidityDate string        `json:"validity_date,omitempty"`
 	PaymentTerm  string        `json:"payment_term,omitempty"`
+	TermsString  string        `json:"payment_terms_string, omitempty"`
 	DefaultTax   *Tax          `json:"default_tax,omitempty"`
 	Discount     *Discount     `json:"discount,omitempty"`
 	PayNow       *PayNow       `json:"pay_now,omitempty"`

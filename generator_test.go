@@ -127,9 +127,11 @@ func TestInvoice(t *testing.T) {
 		TextItemsUnitCostTitle: "Standard Fee",
 		TextTotalTotal:         "Total",
 		TextTotalTax:           "-",
-		TextTotalWithTax:       "-",
+		TextTotalWithTax:       "Total Payable",
 		TextItemsTotalHTTitle:  "-",
 	})
+
+	doc.DefaultTax = nil
 
 	doc.SetHeader(&HeaderFooter{
 		Text:       fmt.Sprintf("<center>Invoice as of %s</center>", "abacas"),
@@ -195,9 +197,7 @@ func TestInvoice(t *testing.T) {
 			Description: "Cupcake ipsum dolor sit amet bonbon, Cupcake ipsum dolor sit amet bonbon, Cupcake ipsum dolor sit amet bonbon",
 			UnitCost:    "99876.89",
 			Quantity:    "2",
-			Tax: &Tax{
-				Percent: "20",
-			},
+			Tax:         nil,
 		})
 	}
 

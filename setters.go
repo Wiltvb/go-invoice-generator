@@ -92,3 +92,8 @@ func (d *Document) SetDiscount(discount *Discount) *Document {
 	d.Discount = discount
 	return d
 }
+
+func (d *Document) SetDocumentSignature(signature *Signature) *Document {
+	d.FooterSignature = signature
+	return d
+}

@@ -93,6 +93,11 @@ func (doc *Document) Build() (*fpdf.Fpdf, error) {
 	// Append payment term
 	doc.appendPaymentTerm()
 
+	// Apply Signature
+	if doc.FooterSignature != nil {
+		doc.FooterSignature.appendSignatureToDoc(doc)
+	}
+
 	// Append js to autoprint if AutoPrint == true
 	if doc.Options.AutoPrint {
 		doc.pdf.SetJavascript("print(true);")

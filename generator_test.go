@@ -205,6 +205,16 @@ func TestInvoice(t *testing.T) {
 
 	doc.SetPaymentTermsString("Payment Due: XXXXXXXXXX<br>Payment Method : PayNow (You can scan the QR below to pay via QR)")
 
+	sigFile, _ := os.ReadFile("./signature.png")
+
+	doc.SetDocumentSignature(&Signature{
+		SignatureName:     "WON DAE RO",
+		SignatureJobTitle: "DIRECTOR, CEO",
+		Signature:         sigFile,
+		SignatureWidth:    80,
+		SignatureHeight:   8,
+	})
+
 	pdf, err := doc.Build()
 	if err != nil {
 		t.Errorf(err.Error())

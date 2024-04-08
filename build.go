@@ -333,7 +333,7 @@ func (doc *Document) appendNotes() {
 
 	currentY := doc.pdf.GetY()
 
-	doc.pdf.SetFont(doc.Options.Font, "", 9)
+	doc.pdf.SetFont(doc.Options.Font, "", 10)
 	doc.pdf.SetX(BaseMargin)
 	doc.pdf.SetRightMargin(100)
 	doc.pdf.SetY(currentY + 10)

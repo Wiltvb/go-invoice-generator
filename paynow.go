@@ -3,8 +3,9 @@ package generator
 import (
 	"bytes"
 	b64 "encoding/base64"
-	"github.com/go-pdf/fpdf"
 	"image"
+
+	"github.com/go-pdf/fpdf"
 )
 
 type PayNow struct {
@@ -37,7 +38,7 @@ func (p *PayNow) appendPayNowTODoc(x float64,
 			var imageOpt fpdf.ImageOptions
 			imageOpt.ImageType = format
 
-			currentY := doc.pdf.GetY() - 5
+			currentY := doc.pdf.GetY() + 15
 
 			doc.pdf.ImageOptions(fileName, doc.pdf.GetX()+150, currentY, 0, float64(p.Height), false, imageOpt, 0, "")
 
